@@ -1,4 +1,4 @@
-export const API_BASE = 'https://czwfn73q-5037.brs.devtunnels.ms/api/'
+export const API_BASE = import.meta.env.VITE_API_BASE
 
 interface FetchWithTimeoutOptions extends RequestInit {
   timeout?: number
