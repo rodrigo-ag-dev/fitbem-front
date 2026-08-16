@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import wallpaper from '../../assets/images/wallpaper.jpg'
 
@@ -11,12 +12,28 @@ const links = [
 export const SplashLayout = () => {
   const location = useLocation()
   const isSlogan = location.pathname === '/'
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [location.pathname])
 
   return (
     <div className="splashBody">
       <div className="splashMenu">
         <NavLink to="/" className="splashLogo" aria-label="Fit Bem" />
-        <div className="splashOptions">
+        <button
+          type="button"
+          className="splashMenuToggle"
+          aria-label="Abrir menu"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((prev) => !prev)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <div className={`splashOptions${menuOpen ? ' open' : ''}`}>
           {links.map((link) => (
             <NavLink
               key={link.to}
