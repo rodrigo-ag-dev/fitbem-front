@@ -28,8 +28,8 @@ export const MessageProvider = ({ children }: { children: ReactNode }) => {
     <MessageContext.Provider value={showMessage}>
       {children}
       {messages.map((message) => (
-        <div key={message.id} className={message.type}>
-          <strong>Aviso!</strong>
+        <div key={message.id} className={`toast ${message.type}`}>
+          <strong>{message.type === 'success' ? 'Pronto!' : 'Aviso!'}</strong>
           <p>{message.text}</p>
           <span className="closebtn" onClick={() => dismiss(message.id)}>X</span>
         </div>

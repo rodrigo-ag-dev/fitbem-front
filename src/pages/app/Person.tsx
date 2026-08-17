@@ -1,5 +1,6 @@
-import type { CSSProperties } from 'react'
+import { useState, type CSSProperties, type FormEvent } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import { useAddWeightEntry } from '../../lib/hooks'
 
 interface FieldProps {
   label: string
@@ -17,7 +18,19 @@ const Field = ({ label, className, placeholder, style }: FieldProps) => (
 
 export const Person = () => {
   const { user } = useAuth()
+  const { addWeight, saving } = useAddWeightEntry()
+  const [weightInput, setWeightInput] = useState(user ? String(user.weight) : '')
+  const [heightInput, setHeightInput] = useState(user ? String(user.height) : '')
+
   if (!user) return null
+
+  const handleSaveVitals = async (event: FormEvent) => {
+    event.preventDefault()
+    const weight = Number(weightInput.replace(',', '.'))
+    const height = Number(heightInput.replace(',', '.'))
+    if (!weight || !height) return
+    await addWeight(weight, height)
+  }
 
   return (
     <div className="appCenter" style={{ justifyContent: 'unset', flex: 0.98, flexDirection: 'row', flexWrap: 'wrap' }}>
@@ -55,9 +68,33 @@ export const Person = () => {
           <Field label="Cidade:" className="inputCidade" style={{ width: 200 }} />
           <Field label="Estado:" className="inputEstado" style={{ width: 100 }} />
         </div>
-        <div className="linha">
-          <Field label="Peso:" className="inputPeso" placeholder={String(user.weight)} style={{ width: 100 }} />
-          <Field label="Altura:" className="inputAltura" placeholder={String(user.height)} style={{ width: 100 }} />
+        <form className="linha vitalsForm" onSubmit={handleSaveVitals}>
+          <div className="campo">
+            <label className="label">Peso (kg):</label>
+            <input
+              className="inputPeso"
+              type="number"
+              inputMode="decimal"
+              step="0.1"
+              min="1"
+              style={{ width: 100 }}
+              value={weightInput}
+              onChange={(event) => setWeightInput(event.target.value)}
+            />
+          </div>
+          <div className="campo">
+            <label className="label">Altura (cm):</label>
+            <input
+              className="inputAltura"
+              type="number"
+              inputMode="decimal"
+              step="1"
+              min="1"
+              style={{ width: 100 }}
+              value={heightInput}
+              onChange={(event) => setHeightInput(event.target.value)}
+            />
+          </div>
           <div className="campo">
             <label className="label">Sexo:</label>
             <select className="selectSexo">
@@ -67,7 +104,10 @@ export const Person = () => {
             </select>
           </div>
           <Field label="Data de Nascimento:" className="inputDataNascimento" style={{ width: 150 }} />
-        </div>
+          <button type="submit" className="histAddSubmit vitalsSubmit" disabled={saving}>
+            {saving ? 'Salvando…' : 'Salvar peso'}
+          </button>
+        </form>
       </div>
     </div>
   )

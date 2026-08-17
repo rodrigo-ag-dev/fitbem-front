@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { API_BASE } from '../../lib/api'
+import { useAddWeightEntry } from '../../lib/hooks'
 import { BMICalc, BMIStatus, FormatDate, idealWeight } from '../../lib/format'
 import campaign1 from '../../assets/images/anuncios/image1.jpg'
 import campaign2 from '../../assets/images/anuncios/image2.jpg'
@@ -25,8 +26,11 @@ const HistoryRow = ({ entry }: { entry: HistoryEntry }) => {
 
 export const Dashboard = () => {
   const { user } = useAuth()
+  const { addWeight, saving } = useAddWeightEntry()
   const [history, setHistory] = useState<HistoryEntry[]>([])
   const [campaignIndex, setCampaignIndex] = useState(0)
+  const [addingWeight, setAddingWeight] = useState(false)
+  const [weightInput, setWeightInput] = useState('')
 
   useEffect(() => {
     if (!user) return
@@ -37,7 +41,10 @@ export const Dashboard = () => {
       .then((resp) => resp.json())
       .then((json: HistoryEntry[]) => setHistory(Array.isArray(json) ? json : []))
       .catch(() => {})
-  }, [user])
+    // Re-fetch only when the logged-in user changes, not on every vitals update
+    // (updateVitals would otherwise clobber the optimistic history update below).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.userId])
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -49,6 +56,19 @@ export const Dashboard = () => {
   if (!user) return null
 
   const water = ((user.weight * 3.5) / 100).toFixed(1)
+
+  const handleAddWeight = async (event: FormEvent) => {
+    event.preventDefault()
+    const weight = Number(weightInput.replace(',', '.'))
+    if (!weight || weight <= 0) return
+
+    const entry = await addWeight(weight, user.height)
+    if (!entry) return
+
+    setHistory((prev) => [entry, ...prev])
+    setWeightInput('')
+    setAddingWeight(false)
+  }
 
   return (
     <div className="appCenter">
@@ -103,7 +123,36 @@ export const Dashboard = () => {
           </div>
 
           <div className="tile tileHist">
-            <p className="histTitle">Resultados anteriores</p>
+            <div className="histHeader">
+              <p className="histTitle">Resultados anteriores</p>
+              <button
+                type="button"
+                className="histAddBtn"
+                onClick={() => setAddingWeight((prev) => !prev)}
+                aria-expanded={addingWeight}
+              >
+                {addingWeight ? 'Cancelar' : '+ Registrar peso'}
+              </button>
+            </div>
+
+            {addingWeight && (
+              <form className="histAddForm" onSubmit={handleAddWeight}>
+                <input
+                  type="number"
+                  inputMode="decimal"
+                  step="0.1"
+                  min="1"
+                  placeholder="Peso de hoje (kg)"
+                  value={weightInput}
+                  onChange={(event) => setWeightInput(event.target.value)}
+                  autoFocus
+                />
+                <button type="submit" className="histAddSubmit" disabled={saving}>
+                  {saving ? 'Salvando…' : 'Salvar'}
+                </button>
+              </form>
+            )}
+
             {history.map((entry, index) => (
               <HistoryRow key={index} entry={entry} />
             ))}

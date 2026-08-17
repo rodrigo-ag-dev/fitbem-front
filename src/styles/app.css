@@ -357,12 +357,84 @@
   grid-area: hist;
 }
 
+.histHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
 .tileHist .histTitle {
   font-size: 12px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 6px;
+}
+
+.histAddBtn {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--primary-color);
+  background-color: transparent;
+  padding: 6px 12px;
+  border-radius: 100px;
+  transition: background var(--transition), color var(--transition);
+}
+
+.histAddBtn:hover {
+  cursor: pointer;
+  background-color: var(--bg);
+  color: var(--primary-color-sel);
+}
+
+.histAddForm {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 4px;
+}
+
+.histAddForm input {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  padding-inline: 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.histAddForm input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(199, 232, 110, 0.4);
+}
+
+.histAddSubmit {
+  flex-shrink: 0;
+  height: 42px;
+  padding-inline: 20px;
+  border-radius: 100px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13.5px;
+  transition: background var(--transition);
+}
+
+.histAddSubmit:hover {
+  cursor: pointer;
+  background-color: var(--primary-color-sel);
+}
+
+.histAddSubmit:disabled {
+  opacity: .7;
+  cursor: default;
 }
 
 .histRow {
@@ -370,11 +442,10 @@
   align-items: center;
   gap: 14px;
   padding-block: 12px;
-  border-top: 1px solid var(--line);
 }
 
-.histRow:first-of-type {
-  border-top: none;
+.histRow + .histRow {
+  border-top: 1px solid var(--line);
 }
 
 .histBadge {
@@ -978,6 +1049,14 @@
   flex-wrap: wrap;
   width: 100%;
   gap: 16px 20px;
+}
+
+.vitalsForm {
+  align-items: flex-end;
+}
+
+.vitalsSubmit {
+  height: 42px;
 }
 
 .campo > input, .campo > select {

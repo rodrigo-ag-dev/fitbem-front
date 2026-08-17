@@ -20,6 +20,7 @@ interface AuthContextValue {
   user: AuthUser | null
   login: (email: string, password: string) => Promise<LoginResult>
   logout: () => void
+  updateVitals: (weight: number, height: number) => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -101,7 +102,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null)
   }, [])
 
-  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>
+  const updateVitals = useCallback((weight: number, height: number) => {
+    setUser((prev) => {
+      if (!prev) return prev
+      const bmi = (weight / ((height / 100) * (height / 100))).toFixed(2)
+      const next: AuthUser = { ...prev, weight, height, bmi }
+      persistUser(next)
+      return next
+    })
+  }, [])
+
+  return <AuthContext.Provider value={{ user, login, logout, updateVitals }}>{children}</AuthContext.Provider>
 }
 
 export const useAuth = () => {

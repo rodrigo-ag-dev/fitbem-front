@@ -221,7 +221,7 @@ button {
   margin-bottom: 10px
 }
 
-.error {
+.toast {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -235,17 +235,24 @@ button {
   padding: 12px 18px;
   border-radius: var(--radius-sm);
   color: white;
-  background-color: #f44336dd;
   box-shadow: var(--shadow-md);
   z-index: 1000;
 }
 
-.error p {
+.toast.error {
+  background-color: #f44336dd;
+}
+
+.toast.success {
+  background-color: var(--primary-color-sel);
+}
+
+.toast p {
   padding-inline: 6px;
   font-size: .9rem;
 }
 
-.error .closebtn {
+.toast .closebtn {
   position: relative;
   display: flex;
   justify-content: center;
@@ -261,8 +268,8 @@ button {
   border-radius: 50%;
 }
 
-.error .closebtn:hover {
-  background-color: black;
+.toast .closebtn:hover {
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .notifyHealth {
