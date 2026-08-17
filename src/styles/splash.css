@@ -85,7 +85,8 @@
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  letter-spacing: 1px;
+  font-weight: 500;
+  letter-spacing: .3px;
   color: var(--secondary-color);
   padding-inline: clamp(16px, 2vw, 26px);
   height: 68px;
@@ -93,7 +94,7 @@
   border-bottom-right-radius: 20px;
   margin-bottom: 2px;
   background-color: transparent;
-  transition: background .3s, color .3s;
+  transition: background var(--transition), color var(--transition);
 }
 
 .splashOption:hover {
@@ -151,6 +152,8 @@
 
 .splashDetail {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   min-height: calc(100vh - 68px);
   background-color: #cedfef;
@@ -187,6 +190,7 @@
 .sloganButton {
   font-size: 20px;
   font-weight: bold;
+  letter-spacing: .3px;
   color: var(--primary-text);
   background-color: var(--primary-color);
   height: 55px;
@@ -198,18 +202,25 @@
   margin-top: clamp(40px, 8vw, 80px);
   margin-left: clamp(20px, 5vw, 40px);
   box-shadow: var(--shadow-sm);
+  transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 
 .sloganButton:hover {
   cursor: pointer;
   color: var(--primary-text);
   background-color: #144552;
-  transition: background .5s, color .5s;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.sloganButton:active {
+  transform: translateY(0);
 }
 
 .formButton {
   font-size: 18px;
   font-weight: bold;
+  letter-spacing: .3px;
   color: var(--primary-text);
   background-color: var(--secondary-color);
   border-radius: 15px;
@@ -222,31 +233,40 @@
   min-height: 60px;
   margin-bottom: 15px;
   box-shadow: var(--shadow-sm);
+  transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 
 .formButton:hover {
   cursor: pointer;
   color: var(--primary-text);
   background-color: #144552;
-  transition: background .5s, color .5s;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.formButton:active {
+  transform: translateY(0);
 }
 
 .aboutBody {
   /* CORPO TOTAL SOBRE */
   position: relative;
   display: flex;
+  flex: 1;
   flex-direction: column;
   width: 100%;
-  min-height: 100%;
+  min-height: 0;
 }
 
 .aboutDetail {
   /* MEIO SOBRE */
   display: flex;
+  flex: 1;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
+  min-height: 420px;
   background-color: #f6f6f6;
   overflow: hidden;
 }
@@ -402,10 +422,11 @@
   /* TELA GERAL CONTATO, CADASTRO E LOGIN */
   position: relative;
   display: flex;
+  flex: 1;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  min-height: 100%;
+  min-height: 0;
   background-color: var(--primary-color);
   scroll-behavior: smooth;
   overflow-y: auto;
@@ -563,9 +584,8 @@
   height: 60px;
   margin-bottom: 20px;
   padding: 12px 20px;
-  border: 3px solid transparent;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
+  border: 2px solid transparent;
+  transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
   outline: none;
   border-radius: 15px;
   color: var(--input-color);
@@ -574,9 +594,15 @@
   font-weight: 300;
 }
 
+.comboField:hover,
+.inputField:hover {
+  background-color: #3f7f91;
+}
+
 .comboField:focus,
 .inputField:focus {
-  border: 3px solid var(--primary-color-sel);
+  border-color: var(--primary-color-sel);
+  box-shadow: 0 0 0 4px rgba(12, 70, 86, 0.25);
 }
 
 .inputField::-webkit-input-placeholder {
