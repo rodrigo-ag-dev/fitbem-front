@@ -4,19 +4,15 @@ import Swal from 'sweetalert2'
 import { useAuth } from '../../context/AuthContext'
 import { API_BASE } from '../../lib/api'
 import { Logo } from '../../components/Logo'
-import iconIndex from '../../assets/images/index.png'
-import iconHealth from '../../assets/images/health.png'
-import iconFitness from '../../assets/images/fitness.png'
-import iconPerson from '../../assets/images/person.png'
-import iconNotify from '../../assets/images/notify.png'
-import iconExit from '../../assets/images/exit.png'
 
-const menuLinkClass = ({ isActive }: { isActive: boolean }) => `iconButton${isActive ? ' iconButtonSel' : ''}`
+const navLinkClass = ({ isActive }: { isActive: boolean }) => `appNavLink${isActive ? ' appNavLinkSel' : ''}`
+const iconLinkClass = ({ isActive }: { isActive: boolean }) => `appIconBtn${isActive ? ' appIconBtnSel' : ''}`
 
 export const AppLayout = () => {
   const { user, logout } = useAuth()
   const location = useLocation()
   const [hasUnread, setHasUnread] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     if (!user) return
@@ -28,6 +24,10 @@ export const AppLayout = () => {
       .then((json: { count?: number }) => setHasUnread(Boolean(json?.count && json.count > 0)))
       .catch(() => {})
   }, [user, location.pathname])
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [location.pathname])
 
   const handleExit = () => {
     Swal.fire({
@@ -48,32 +48,74 @@ export const AppLayout = () => {
   return (
     <div className="appBody">
       <div className="appDetail">
-        <div className="appLeft">
-          <div className="appLeftLogo">
-            <Logo variant="white" size={26} />
-          </div>
-          <div className="menuDivisor" />
-          <NavLink to="/app" end className={menuLinkClass} data-tooltip="Índices">
-            <img src={iconIndex} alt="Índices" />
+        <div className="appTopbar">
+          <NavLink to="/app" className="appBrand">
+            <Logo withWordmark />
           </NavLink>
-          <NavLink to="/app/saude" className={menuLinkClass} data-tooltip="Saúde">
-            <img src={iconHealth} alt="Saúde" />
-          </NavLink>
-          <NavLink to="/app/fitness" className={menuLinkClass} data-tooltip="Fitness">
-            <img src={iconFitness} alt="Fitness" />
-          </NavLink>
-          <NavLink to="/app/dados" className={menuLinkClass} data-tooltip="Meus dados">
-            <img src={iconPerson} alt="Meus dados" />
-          </NavLink>
-          <NavLink to="/app/notificacoes" id="btnNotify" className={menuLinkClass} data-tooltip="Notificações">
-            <img src={iconNotify} alt="Notificações" />
-            {hasUnread && <div className="notifyHealth" />}
-          </NavLink>
-          <div className="menuDivisor" />
-          <button type="button" className="iconButton" data-tooltip="Sair" onClick={handleExit}>
-            <img src={iconExit} alt="Sair" />
+
+          <button
+            type="button"
+            className="appMenuToggle"
+            aria-label="Abrir menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            <span />
+            <span />
+            <span />
           </button>
+
+          <div className={`appTopbarRight${menuOpen ? ' open' : ''}`}>
+            <div className="appPillNav">
+              <NavLink to="/app" end className={navLinkClass}>
+                Índices
+              </NavLink>
+              <NavLink to="/app/saude" className={navLinkClass}>
+                Saúde
+              </NavLink>
+              <NavLink to="/app/fitness" className={navLinkClass}>
+                Fitness
+              </NavLink>
+              <NavLink to="/app/dados" className={navLinkClass}>
+                Meus dados
+              </NavLink>
+            </div>
+
+            <div className="appIconGroup">
+              <NavLink to="/app/notificacoes" className={iconLinkClass} data-tooltip="Notificações">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M6 9a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 13 6 9Z"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinejoin="round"
+                  />
+                  <path d="M10 18a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+                {hasUnread && <div className="notifyHealth" />}
+              </NavLink>
+              <button type="button" className="appIconBtn" data-tooltip="Sair" onClick={handleExit}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M16 17l5-5-5-5M21 12H9"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
+
         <div className="appBase">
           <Outlet />
         </div>

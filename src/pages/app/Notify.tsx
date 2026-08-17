@@ -96,10 +96,7 @@ export const Notify = () => {
   if (!user) return null
 
   return (
-    <div
-      className="appCenter"
-      style={{ justifyContent: loading ? 'center' : 'start', flex: 0.98, overflow: 'scroll' }}
-    >
+    <div className="appCenter" style={{ justifyContent: loading ? 'center' : 'flex-start' }}>
       {loading && <Spinner />}
       {!loading &&
         items.map((item) => (

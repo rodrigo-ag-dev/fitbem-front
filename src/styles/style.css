@@ -267,12 +267,12 @@ button {
 
 .notifyHealth {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 10px;
-  height: 10px;
+  top: 6px;
+  right: 6px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  border: 1px solid red;
+  border: 1.5px solid var(--surface);
   background-color: red;
 }
 
