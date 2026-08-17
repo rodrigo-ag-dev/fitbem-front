@@ -700,8 +700,8 @@
   background-color: #33645c;
 }
 
-.comboField:focus,
-.inputField:focus {
+.comboField:focus-within,
+.inputField:focus-within {
   border-color: var(--lime);
   box-shadow: 0 0 0 4px rgba(199, 232, 110, 0.28);
 }

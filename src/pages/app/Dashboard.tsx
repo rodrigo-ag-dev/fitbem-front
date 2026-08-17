@@ -2,7 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { API_BASE } from '../../lib/api'
 import { useAddWeightEntry } from '../../lib/hooks'
-import { BMICalc, BMIStatus, FormatDate, idealWeight } from '../../lib/format'
+import { BMICalc, BMIStatus, FormatDate, bmiColor, idealWeight } from '../../lib/format'
 import campaign1 from '../../assets/images/anuncios/image1.jpg'
 import campaign2 from '../../assets/images/anuncios/image2.jpg'
 import campaign3 from '../../assets/images/anuncios/image3.jpg'
@@ -15,7 +15,7 @@ const HistoryRow = ({ entry }: { entry: HistoryEntry }) => {
   const bmi = BMICalc(entry.weight, entry.height)
   return (
     <div className="histRow">
-      <div className="histBadge">{bmi}</div>
+      <div className="histBadge" style={{ backgroundColor: bmiColor(bmi) }}>{bmi}</div>
       <div className="histInfo">
         <span className="status">{BMIStatus(bmi)}</span>
         <span className="date">{FormatDate(entry.day)}</span>

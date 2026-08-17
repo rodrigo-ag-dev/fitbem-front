@@ -101,10 +101,10 @@ export const Register = () => {
               onChange={update('phone')}
             />
             <Select
-              className="containerChildren"
+              className="containerChildren comboField"
               options={genderOptions}
               value={form.gender}
-              onChange={update('gender')}
+              onChange={(gender) => setForm((prev) => ({ ...prev, gender }))}
             />
           </Container>
           <Container>

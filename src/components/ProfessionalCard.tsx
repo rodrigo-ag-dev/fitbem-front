@@ -2,6 +2,7 @@ import favIcon from '../assets/images/fav.png'
 import cityIcon from '../assets/images/city.png'
 import whatsappIcon from '../assets/images/whatsapp.png'
 import type { Professional } from '../types'
+import { colorFor } from '../lib/textColor'
 
 const DetailRow = ({ icon, text, bold }: { icon: string; text: string; bold?: boolean }) => (
   <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -22,23 +23,26 @@ const DetailRow = ({ icon, text, bold }: { icon: string; text: string; bold?: bo
 
 type ProfessionalCardProps = Pick<Professional, 'description' | 'city' | 'whatsapp' | 'specialty' | 'category'>
 
-export const ProfessionalCard = ({ description, city, whatsapp, specialty, category }: ProfessionalCardProps) => (
-  <div className="professionalCard">
-    <div className="professionalCardBadge">
-      <p>{category}</p>
-    </div>
-    <div className="professionalCardBody">
-      <div className="professionalCardDetails">
-        <DetailRow icon={favIcon} text={description} bold />
-        <DetailRow icon={cityIcon} text={city} />
-        <DetailRow icon={whatsappIcon} text={whatsapp} />
+export const ProfessionalCard = ({ description, city, whatsapp, specialty, category }: ProfessionalCardProps) => {
+  const badgeColor = colorFor(category)
+  return (
+    <div className="professionalCard">
+      <div className="professionalCardBadge" style={{ backgroundColor: badgeColor.bg }}>
+        <p style={{ color: badgeColor.fg }}>{category}</p>
       </div>
-      <div className="professionalCardSpecialty">
-        <p style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--ink)' }}>Especialidade:</p>
-        <p style={{ fontSize: 12.5, color: 'var(--muted)', lineHeight: '1.3rem', textAlign: 'justify' }}>
-          {specialty}
-        </p>
+      <div className="professionalCardBody">
+        <div className="professionalCardDetails">
+          <DetailRow icon={favIcon} text={description} bold />
+          <DetailRow icon={cityIcon} text={city} />
+          <DetailRow icon={whatsappIcon} text={whatsapp} />
+        </div>
+        <div className="professionalCardSpecialty">
+          <p style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--ink)' }}>Especialidade:</p>
+          <p style={{ fontSize: 12.5, color: 'var(--muted)', lineHeight: '1.3rem', textAlign: 'justify' }}>
+            {specialty}
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}

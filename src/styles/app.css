@@ -565,7 +565,7 @@
   font-size: .8rem;
   font-weight: 600;
   white-space: nowrap;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: var(--shadow-md);
 }
 
@@ -600,7 +600,7 @@
   min-height: 98px;
   padding-block: 8px;
   background-color: white;
-  border-radius: 14px;
+  border-radius: 8px;
   margin-bottom: 10px;
   box-shadow: var(--shadow-xs);
   color: var(--secondary-color);
@@ -741,7 +741,7 @@
 
 .headerHealth > .filterHealth > .filterHealthSearch {
   background-color: var(--surface);
-  border-radius: 100px 0 0 100px;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -772,7 +772,7 @@
   height: 100%;
   width: 100%;
   min-width: 0;
-  border-radius: 100px;
+  border-radius: var(--radius-md);
   border: 0 none;
   outline: 0;
   padding-left: 12px;
@@ -784,7 +784,7 @@
   height: 100%;
   width: 117px;
   flex-shrink: 0;
-  border-radius: 0 100px 100px 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   font-size: .95rem;
   font-weight: 700;
   cursor: pointer;
@@ -795,14 +795,14 @@
   background-color: var(--primary-color-sel);
 }
 
-.selectEspecialidade, .selectCidade, .selectEstado, .selectTipoServico {
-  height: 52px;
+.selectPill {
+  min-height: 52px;
   background-color: var(--surface);
   border: none;
-  border-radius: 100px;
+  border-radius: var(--radius-md);
   color: var(--muted);
   font-weight: 600;
-  padding-left: 1.2rem;
+  padding-inline: 1.2rem;
   box-shadow: var(--shadow-xs);
   transition: box-shadow var(--transition);
   cursor: pointer;
@@ -810,8 +810,8 @@
   min-width: 130px;
 }
 
-.selectEspecialidade:focus, .selectCidade:focus, .selectEstado:focus, .selectTipoServico:focus {
-  outline: none;
+.selectPill[data-open="true"],
+.selectPill:focus-within {
   box-shadow: 0 0 0 3px rgba(199, 232, 110, 0.45);
 }
 
@@ -875,7 +875,7 @@
 
 .headerFitness > .filterFitness > .filterFitnessSearch {
   background-color: var(--surface);
-  border-radius: 100px 0 0 100px;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -906,7 +906,7 @@
   height: 100%;
   width: 100%;
   min-width: 0;
-  border-radius: 100px;
+  border-radius: var(--radius-md);
   border: 0 none;
   outline: 0;
   padding-left: 12px;
@@ -918,7 +918,7 @@
   height: 100%;
   width: 117px;
   flex-shrink: 0;
-  border-radius: 0 100px 100px 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   font-size: .95rem;
   font-weight: 700;
   cursor: pointer;
@@ -1063,7 +1063,7 @@
   height: 42px;
 }
 
-.campo > input, .campo > select {
+.campo > input {
   width: 100%;
   border-radius: var(--radius-sm);
   border: .1rem solid var(--line);
@@ -1072,15 +1072,10 @@
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
-.campo > input:focus, .campo > select:focus {
+.campo > input:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(199, 232, 110, 0.4);
-}
-
-.campo > select {
-  background-color: var(--surface);
-  cursor: pointer;
 }
 
 .campo > label {

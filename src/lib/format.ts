@@ -19,6 +19,20 @@ export const BMIStatus = (bmi: number | string) => {
   return 'Obesidade Grau III'
 }
 
+export const bmiColor = (bmi: number | string) => {
+  const value = Number(bmi)
+  const healthyLow = 18.5
+  const healthyHigh = 24.9
+  const distance = value < healthyLow ? healthyLow - value : value > healthyHigh ? value - healthyHigh : 0
+  const t = Math.min(distance / 15, 1)
+  const healthy = { r: 47, g: 143, b: 122 }
+  const unhealthy = { r: 214, g: 58, b: 58 }
+  const r = Math.round(healthy.r + (unhealthy.r - healthy.r) * t)
+  const g = Math.round(healthy.g + (unhealthy.g - healthy.g) * t)
+  const b = Math.round(healthy.b + (unhealthy.b - healthy.b) * t)
+  return `rgb(${r}, ${g}, ${b})`
+}
+
 export const idealWeight = (height: number) => {
   if (height <= 155) return '44-58'
   if (height <= 160) return '47 - 61'

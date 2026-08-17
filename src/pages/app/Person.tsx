@@ -1,6 +1,13 @@
 import { useState, type CSSProperties, type FormEvent } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { useAddWeightEntry } from '../../lib/hooks'
+import { Select } from '../../components/Select'
+
+const sexoOptions = [
+  { value: 0, text: 'Selecione' },
+  { value: 1, text: 'Feminino' },
+  { value: 2, text: 'Masculino' },
+]
 
 interface FieldProps {
   label: string
@@ -97,11 +104,7 @@ export const Person = () => {
           </div>
           <div className="campo">
             <label className="label">Sexo:</label>
-            <select className="selectSexo">
-              <option value={0}>Selecione</option>
-              <option value={1}>Feminino</option>
-              <option value={2}>Masculino</option>
-            </select>
+            <Select options={sexoOptions} defaultValue="0" />
           </div>
           <Field label="Data de Nascimento:" className="inputDataNascimento" style={{ width: 150 }} />
           <button type="submit" className="histAddSubmit vitalsSubmit" disabled={saving}>
