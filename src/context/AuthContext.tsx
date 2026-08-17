@@ -4,6 +4,9 @@ import { API_BASE, fetchWithTimeout } from '../lib/api'
 export interface AuthUser {
   token: string
   name: string
+  lastname: string
+  phone: string
+  gender: string
   email: string
   userId: string
   weight: number
@@ -16,16 +19,24 @@ interface LoginResult {
   error?: string
 }
 
+interface ProfileFields {
+  name: string
+  lastname: string
+  phone: string
+  gender: string
+}
+
 interface AuthContextValue {
   user: AuthUser | null
   login: (email: string, password: string) => Promise<LoginResult>
   logout: () => void
   updateVitals: (weight: number, height: number) => void
+  updateProfile: (fields: ProfileFields) => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
-const STORAGE_KEYS = ['token', 'name', 'email', 'userID', 'weight', 'height', 'bmi'] as const
+const STORAGE_KEYS = ['token', 'name', 'lastname', 'phone', 'gender', 'email', 'userID', 'weight', 'height', 'bmi'] as const
 
 const readStoredUser = (): AuthUser | null => {
   const token = localStorage.getItem('token')
@@ -34,6 +45,9 @@ const readStoredUser = (): AuthUser | null => {
   return {
     token,
     name: localStorage.getItem('name') ?? '',
+    lastname: localStorage.getItem('lastname') ?? '',
+    phone: localStorage.getItem('phone') ?? '',
+    gender: localStorage.getItem('gender') ?? '',
     email: localStorage.getItem('email') ?? '',
     userId: localStorage.getItem('userID') ?? '',
     weight: Number(localStorage.getItem('weight') ?? 0),
@@ -45,6 +59,9 @@ const readStoredUser = (): AuthUser | null => {
 const persistUser = (user: AuthUser) => {
   localStorage.setItem('token', user.token)
   localStorage.setItem('name', user.name)
+  localStorage.setItem('lastname', user.lastname)
+  localStorage.setItem('phone', user.phone)
+  localStorage.setItem('gender', user.gender)
   localStorage.setItem('email', user.email)
   localStorage.setItem('userID', user.userId)
   localStorage.setItem('weight', String(user.weight))
@@ -85,6 +102,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const nextUser: AuthUser = {
       token: data.token,
       name: data.reg.name,
+      lastname: data.reg.lastname ?? '',
+      phone: data.reg.phone ?? '',
+      gender: data.reg.gender ?? '',
       email: data.reg.email,
       userId: data.reg.id,
       weight,
@@ -112,7 +132,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     })
   }, [])
 
-  return <AuthContext.Provider value={{ user, login, logout, updateVitals }}>{children}</AuthContext.Provider>
+  const updateProfile = useCallback((fields: ProfileFields) => {
+    setUser((prev) => {
+      if (!prev) return prev
+      const next: AuthUser = { ...prev, ...fields }
+      persistUser(next)
+      return next
+    })
+  }, [])
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout, updateVitals, updateProfile }}>{children}</AuthContext.Provider>
+  )
 }
 
 export const useAuth = () => {

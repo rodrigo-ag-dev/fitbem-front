@@ -94,3 +94,82 @@ export const useAddWeightEntry = () => {
 
   return { addWeight, saving }
 }
+
+export interface ProfileFields {
+  name: string
+  lastname: string
+  phone: string
+  gender: string
+}
+
+export const useUpdateProfile = () => {
+  const { user, updateProfile } = useAuth()
+  const showMessage = useMessage()
+  const [saving, setSaving] = useState(false)
+
+  const saveProfile = useCallback(
+    async (fields: ProfileFields): Promise<boolean> => {
+      if (!user) return false
+      setSaving(true)
+      try {
+        const resp = await fetchWithTimeout(`${API_BASE}user/${user.userId}`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+          body: JSON.stringify(fields),
+        })
+
+        if (!resp || resp.status >= 400) {
+          showMessage('Não foi possível salvar os dados agora. Tente novamente mais tarde.', 'error')
+          return false
+        }
+
+        updateProfile(fields)
+        showMessage('Dados atualizados com sucesso.', 'success')
+        return true
+      } finally {
+        setSaving(false)
+      }
+    },
+    [user, updateProfile, showMessage],
+  )
+
+  return { saveProfile, saving }
+}
+
+export const useUploadPhoto = () => {
+  const { user } = useAuth()
+  const showMessage = useMessage()
+  const [uploading, setUploading] = useState(false)
+
+  const uploadPhoto = useCallback(
+    async (file: File): Promise<boolean> => {
+      if (!user) return false
+      setUploading(true)
+      try {
+        const body = new FormData()
+        body.append('photo', file)
+        const resp = await fetchWithTimeout(`${API_BASE}user/${user.userId}/photo`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${user.token}` },
+          body,
+        })
+
+        if (!resp || resp.status >= 400) {
+          showMessage('Não foi possível atualizar a foto agora. Tente novamente mais tarde.', 'error')
+          return false
+        }
+
+        showMessage('Foto atualizada com sucesso.', 'success')
+        return true
+      } finally {
+        setUploading(false)
+      }
+    },
+    [user, showMessage],
+  )
+
+  return { uploadPhoto, uploading }
+}
