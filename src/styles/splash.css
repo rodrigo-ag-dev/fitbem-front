@@ -9,27 +9,21 @@
   top: 0;
   z-index: 200;
   width: 100%;
-  height: 68px;
+  height: 76px;
   background-color: var(--splashMenu-bgcolor);
-  box-shadow: 0 2px 12px -6px rgba(13, 44, 52, 0.25);
+  box-shadow: 0 2px 14px -8px rgba(20, 37, 36, 0.18);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 20px;
 }
 
-.splashLogo {
+.splashLogoLink {
   flex-shrink: 0;
-  margin-left: 32px;
-  width: 108px;
-  height: 49px;
-  background-image: url('../assets/images/splashLogo.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.splashLogo:hover {
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: 28px;
+  text-decoration: none;
+  color: var(--ink);
 }
 
 .splashMenuToggle {
@@ -55,7 +49,7 @@
   display: block;
   width: 24px;
   height: 2px;
-  background-color: var(--secondary-color);
+  background-color: var(--ink);
   transition: transform .3s, opacity .3s;
 }
 
@@ -74,44 +68,63 @@
 .splashOptions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  height: 68px;
-  margin-right: 10px;
+  gap: 14px;
+  margin-right: 22px;
+}
+
+.splashPillNav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--bg);
+  border-radius: 100px;
+  padding: 5px;
 }
 
 .splashOption {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: .3px;
-  color: var(--secondary-color);
-  padding-inline: clamp(16px, 2vw, 26px);
-  height: 68px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  margin-bottom: 2px;
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: .01em;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 11px 20px;
+  border-radius: 100px;
   background-color: transparent;
   transition: background var(--transition), color var(--transition);
 }
 
 .splashOption:hover {
   cursor: pointer;
+  color: var(--ink);
+}
+
+.splashOptionSelected,
+.splashOptionSelected:hover {
   color: var(--primary-text);
   background-color: var(--primary-color);
 }
 
-.splashOptionSelected {
-  color: var(--primary-text);
-  background-color: var(--primary-color-sel);
+.splashCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: #fff;
+  text-decoration: none;
+  background-color: var(--ink);
+  padding: 13px 24px;
+  border-radius: 100px;
+  transition: background var(--transition), transform var(--transition);
+  white-space: nowrap;
 }
 
-.splashOption p {
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.splashCta:hover {
+  background-color: var(--primary-color-sel);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 900px) {
@@ -121,32 +134,43 @@
 
   .splashOptions {
     position: absolute;
-    top: 68px;
+    top: 76px;
     left: 0;
     right: 0;
-    height: auto;
     flex-direction: column;
     align-items: stretch;
-    justify-content: flex-start;
     background-color: var(--splashMenu-bgcolor);
     box-shadow: var(--shadow-md);
     overflow: hidden;
     max-height: 0;
+    gap: 0;
+    padding: 0 14px;
     transition: max-height .35s ease;
     margin-right: 0;
   }
 
   .splashOptions.open {
-    max-height: 320px;
+    max-height: 400px;
+    padding: 14px;
+  }
+
+  .splashPillNav {
+    flex-direction: column;
+    align-items: stretch;
+    background: transparent;
+    padding: 0;
+    gap: 4px;
   }
 
   .splashOption {
-    height: 56px;
-    width: 100%;
-    border-radius: 0;
-    margin: 0;
     justify-content: flex-start;
-    padding-left: 32px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+  }
+
+  .splashCta {
+    margin-top: 10px;
+    width: 100%;
   }
 }
 
@@ -155,61 +179,92 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: calc(100vh - 68px);
-  background-color: #cedfef;
-  background-size: cover;
-  background-position: center;
+  min-height: calc(100vh - 76px);
+  background-color: var(--bg);
 }
 
 .splashSlogan {
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 68px);
-  background-color: transparent;
+  min-height: calc(100vh - 76px);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
   padding-block: 40px;
 }
 
-.sloganTitle {
-  font-size: clamp(22px, 4vw, 32px);
-  font-weight: bold;
-  color: var(--primary-color);
-  margin-left: clamp(20px, 5vw, 40px);
+.sloganBento {
+  display: grid;
+  grid-template-columns: 1.3fr .8fr;
+  grid-template-rows: auto auto;
+  gap: 18px;
+  width: 100%;
+  max-width: 1120px;
+  padding-inline: 24px;
 }
 
-.sloganText {
-  font-size: clamp(22px, 4vw, 32px);
-  font-weight: bold;
-  color: var(--secondary-color);
-  margin-left: clamp(20px, 5vw, 40px);
-  max-width: min(400px, 90vw);
+.sloganMain {
+  grid-row: 1 / 3;
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: clamp(32px, 5vw, 58px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+}
+
+.sloganKicker {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #dcf1e8;
+  margin-bottom: 16px;
+}
+
+.sloganHeadline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(30px, 4.6vw, 50px);
+  line-height: 1.06;
+  letter-spacing: -.01em;
+  max-width: 14ch;
+  margin-bottom: 18px;
+  text-wrap: balance;
+}
+
+.sloganSub {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #dcf1e8;
+  max-width: 42ch;
+  margin-bottom: 30px;
 }
 
 .sloganButton {
-  font-size: 20px;
-  font-weight: bold;
-  letter-spacing: .3px;
-  color: var(--primary-text);
-  background-color: var(--primary-color);
-  height: 55px;
-  width: min(288px, calc(90vw - 40px));
-  border-radius: 50px;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  color: var(--primary-color-sel);
+  background-color: #fff;
+  height: 54px;
+  padding-inline: 30px;
+  border-radius: 100px;
   display: flex;
   align-items: center;
   place-content: center;
-  margin-top: clamp(40px, 8vw, 80px);
-  margin-left: clamp(20px, 5vw, 40px);
-  box-shadow: var(--shadow-sm);
+  gap: 8px;
   transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 
 .sloganButton:hover {
   cursor: pointer;
-  color: var(--primary-text);
-  background-color: #144552;
-  box-shadow: var(--shadow-md);
+  background-color: var(--lime);
+  color: var(--secondary-color);
   transform: translateY(-2px);
 }
 
@@ -217,20 +272,70 @@
   transform: translateY(0);
 }
 
+.sloganTile {
+  border-radius: var(--radius-lg);
+  padding: clamp(20px, 3vw, 30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.sloganTileLime {
+  background-color: var(--lime);
+}
+
+.sloganTileLime .tileBig {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(24px, 3vw, 32px);
+  color: var(--secondary-color);
+}
+
+.sloganTileLime .tileSmall {
+  font-size: 13px;
+  color: #3c4a2f;
+}
+
+.sloganTileSky {
+  background-color: var(--sky);
+  flex-direction: row;
+  align-items: center;
+}
+
+.sloganTileSky span {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--secondary-color);
+}
+
+@media (max-width: 760px) {
+  .sloganBento {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .sloganMain {
+    grid-row: auto;
+  }
+}
+
 .formButton {
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: .3px;
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: .01em;
   color: var(--primary-text);
-  background-color: var(--secondary-color);
-  border-radius: 15px;
+  background-color: var(--primary-color);
+  border-radius: 100px;
   display: flex;
   align-items: center;
   place-content: center;
   width: 100%;
   max-width: 448px;
-  height: 60px;
-  min-height: 60px;
+  height: 58px;
+  min-height: 58px;
   margin-bottom: 15px;
   box-shadow: var(--shadow-sm);
   transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
@@ -239,7 +344,7 @@
 .formButton:hover {
   cursor: pointer;
   color: var(--primary-text);
-  background-color: #144552;
+  background-color: var(--primary-color-sel);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
@@ -267,7 +372,7 @@
   justify-content: space-between;
   width: 100%;
   min-height: 420px;
-  background-color: #f6f6f6;
+  background-color: var(--bg);
   overflow: hidden;
 }
 
@@ -295,7 +400,7 @@
 
 .aboutFooter div:last-of-type {
   /* DIV DIREITA FOOTER SOBRE */
-  background-color: var(--primary-color);
+  background-color: var(--ink);
 }
 
 .footerTitle {
@@ -304,9 +409,10 @@
   align-items: center;
   justify-content: center;
   gap: 15px;
-  font-weight: bold;
-  font-size: clamp(16px, 2vw, 20px);
-  letter-spacing: 1px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(15px, 1.8vw, 19px);
+  letter-spacing: .02em;
   color: var(--primary-text);
   text-align: center;
   margin: 0 10px;
@@ -390,9 +496,10 @@
 .aboutDetailName {
   /* TÍTULO PÁGINA SOBRE */
   margin-top: 20px;
+  font-family: var(--font-display);
   font-size: clamp(34px, 7vw, 60px);
-  font-weight: bold;
-  letter-spacing: 3px;
+  font-weight: 800;
+  letter-spacing: -.01em;
   color: var(--primary-color);
 }
 
@@ -401,9 +508,10 @@
   margin: 0 20px;
   margin-top: 15px;
   font-size: clamp(18px, 3vw, 26px);
-  letter-spacing: 1px;
+  font-weight: 600;
+  letter-spacing: .02em;
   text-align: center;
-  color: var(--primary-color);
+  color: var(--ink);
   max-width: 647px;
 }
 
@@ -411,9 +519,9 @@
   /* TEXTO PÁGINA SOBRE */
   margin-top: clamp(24px, 6vw, 78px);
   font-size: clamp(16px, 2.4vw, 22px);
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: var(--primary-color);
+  font-weight: 400;
+  letter-spacing: .01em;
+  color: var(--muted);
   max-width: 693px;
   text-align: center;
 }
@@ -502,27 +610,19 @@
   opacity: 60%;
 }
 
-.logo {
-  /* LOGO BRANCO CONTATO, CADASTRO E LOGIN */
-  width: 90px;
-  height: 80px;
-  background-image: url('../assets/images/logowhite.png');
-  background-position-x: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
 .title {
   /* TITULO CONTATO, CADASTRO E LOGIN */
-  font-size: clamp(28px, 5vw, 40px);
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4.6vw, 38px);
   margin-block: 20px;
-  font-weight: 500;
+  font-weight: 800;
+  letter-spacing: -.01em;
   text-align: center;
 }
 
 .text {
   /* SUBTITULO LOGIN */
-  font-size: clamp(16px, 2.4vw, 20px);
+  font-size: clamp(15px, 2.2vw, 18px);
   font-weight: 500;
   text-align: center;
   padding-inline: 20px;
@@ -532,7 +632,7 @@
   /* LINK SUBTITULO LOGIN */
   font-size: inherit;
   font-weight: 800;
-  color: var(--primary-color-sel);
+  color: var(--lime);
   text-decoration: none;
 }
 
@@ -581,28 +681,29 @@
 .inputField {
   /* INPUTS FORMS CONTATO, CADASTRO E LOGIN */
   width: 100%;
-  height: 60px;
+  height: 58px;
   margin-bottom: 20px;
   padding: 12px 20px;
   border: 2px solid transparent;
   transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
   outline: none;
-  border-radius: 15px;
+  border-radius: var(--radius-md);
   color: var(--input-color);
   background-color: var(--input-bgcolor);
-  font-size: 17px;
-  font-weight: 300;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .comboField:hover,
 .inputField:hover {
-  background-color: #3f7f91;
+  background-color: #33645c;
 }
 
 .comboField:focus,
 .inputField:focus {
-  border-color: var(--primary-color-sel);
-  box-shadow: 0 0 0 4px rgba(12, 70, 86, 0.25);
+  border-color: var(--lime);
+  box-shadow: 0 0 0 4px rgba(199, 232, 110, 0.28);
 }
 
 .inputField::-webkit-input-placeholder {

@@ -1,31 +1,58 @@
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 700 800;
+  font-display: swap;
+  src: url('../assets/fonts/bricolage-grotesque.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/manrope.woff2') format('woff2');
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 :root {
   --size: 10;
-  --color-one: #0d2c34;
-  --color-two: #0c4656;
-  --color-three: #236678;
-  --color-four: #4F808D;
+  --color-one: #2f8f7a;
+  --color-two: #1f6e5c;
+  --color-three: #c7e86e;
+  --color-four: #bfe3e8;
   --input-color: #ffffff;
-  --input-color-hover: #dfdfdf;
-  --input-bgcolor: #397383;
+  --input-color-hover: #d7f0c9;
+  --input-bgcolor: #2a5850;
   --splashMenu-bgcolor: #ffffff;
-  --primary-color: #4F808D;
-  --secondary-color: #236678;
-  --primary-color-sel: #0c4656;
-  --secundary-color-sel: #0d2c34;
-  --scroll-color: #23667855;
-  --scroll-color-hover: #236678;
+  --primary-color: #2f8f7a;
+  --secondary-color: #17302c;
+  --primary-color-sel: #1f6e5c;
+  --secundary-color-sel: #0f211d;
+  --scroll-color: #2f8f7a55;
+  --scroll-color-hover: #2f8f7a;
   --primary-text: #ffffff;
 
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --shadow-xs: 0 1px 3px rgba(13, 44, 52, 0.08), 0 1px 2px rgba(13, 44, 52, 0.06);
-  --shadow-sm: 0 4px 16px -6px rgba(13, 44, 52, 0.22), 0 2px 6px -2px rgba(13, 44, 52, 0.1);
-  --shadow-md: 0 14px 34px -14px rgba(13, 44, 52, 0.32), 0 4px 12px -4px rgba(13, 44, 52, 0.14);
+  --bg: #f6f8f6;
+  --surface: #ffffff;
+  --ink: #142524;
+  --muted: #5f7570;
+  --lime: #c7e86e;
+  --sky: #bfe3e8;
+  --line: #e3e9e4;
+
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+  --font-body: 'Manrope', 'Segoe UI', sans-serif;
+
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --shadow-xs: 0 1px 3px rgba(20, 37, 36, 0.08), 0 1px 2px rgba(20, 37, 36, 0.06);
+  --shadow-sm: 0 4px 16px -6px rgba(20, 37, 36, 0.16), 0 2px 6px -2px rgba(20, 37, 36, 0.08);
+  --shadow-md: 0 14px 34px -14px rgba(20, 37, 36, 0.26), 0 4px 12px -4px rgba(20, 37, 36, 0.12);
   --ease: cubic-bezier(.4, 0, .2, 1);
   --transition-fast: .18s var(--ease);
   --transition: .28s var(--ease);
@@ -43,13 +70,14 @@ body.swal2-shown>[aria-hidden="true"] {
 *::after {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-body);
   box-sizing: border-box;
 }
 
 body {
-  background-color: #eeeeee;
-  font-family: Poppins, sans-serif;
+  background-color: var(--bg);
+  font-family: var(--font-body);
+  color: var(--ink);
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
@@ -58,6 +86,12 @@ body {
 #root {
   width: 100%;
   min-height: 100vh;
+}
+
+.logoWordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -.01em;
 }
 
 

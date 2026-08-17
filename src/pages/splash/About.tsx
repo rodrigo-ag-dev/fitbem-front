@@ -24,7 +24,7 @@ export const About = () => (
           peso ideal ao longo do tempo.
         </p>
       </div>
-      <div className="aboutFooterDiv" style={{ backgroundColor: '#236678' }}>
+      <div className="aboutFooterDiv">
         <div className="footerTitle">
           <img src={profissionalIcon} alt="" />
           <span>ACESSO A PROFISSIONAIS DE SAÚDE</span>

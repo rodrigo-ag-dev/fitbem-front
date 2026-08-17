@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Logo } from './Logo'
 
 interface FormScreenProps {
   title: string
@@ -9,7 +10,7 @@ interface FormScreenProps {
 export const FormScreen = ({ title, texts = [], children }: FormScreenProps) => (
   <div>
     <div className="screenTop">
-      <div className="logo" />
+      <Logo size={52} variant="white" />
       <p className="title">{title}</p>
       {texts.map((text, index) => (
         <p className="text" key={index}>

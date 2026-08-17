@@ -3,7 +3,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { useAuth } from '../../context/AuthContext'
 import { API_BASE } from '../../lib/api'
-import logoWhite from '../../assets/images/logowhite.png'
+import { Logo } from '../../components/Logo'
 import iconIndex from '../../assets/images/index.png'
 import iconHealth from '../../assets/images/health.png'
 import iconFitness from '../../assets/images/fitness.png'
@@ -49,7 +49,9 @@ export const AppLayout = () => {
     <div className="appBody">
       <div className="appDetail">
         <div className="appLeft">
-          <img src={logoWhite} style={{ width: '3.2em', height: '2.9em', margin: '1.2rem' }} alt="Fit Bem" />
+          <div className="appLeftLogo">
+            <Logo variant="white" size={26} />
+          </div>
           <div className="menuDivisor" />
           <NavLink to="/app" end className={menuLinkClass} data-tooltip="Índices">
             <img src={iconIndex} alt="Índices" />
