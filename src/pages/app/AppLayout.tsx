@@ -39,18 +39,6 @@ export const AppLayout = () => {
             <Logo withWordmark />
           </NavLink>
 
-          <button
-            type="button"
-            className="appMenuToggle"
-            aria-label="Abrir menu"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((prev) => !prev)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-
           <div className="appTopbarGroup">
             <div className={`appTopbarRight${menuOpen ? ' open' : ''}`}>
               <div className="appPillNav">
@@ -83,8 +71,22 @@ export const AppLayout = () => {
 
             {/* Kept outside the collapsible mobile panel above so its popup never
                 gets clipped by that panel's overflow:hidden/max-height, and so
-                the account menu stays reachable without opening the hamburger. */}
+                the account menu stays reachable without opening the hamburger.
+                Placed before the hamburger toggle so on mobile the avatar
+                appears to its left. */}
             <UserMenu />
+
+            <button
+              type="button"
+              className="appMenuToggle"
+              aria-label="Abrir menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((prev) => !prev)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
         </div>
 
