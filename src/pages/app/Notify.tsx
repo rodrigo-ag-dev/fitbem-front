@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { API_BASE } from '../../lib/api'
 import { FormatDate } from '../../lib/format'
-import { Spinner } from '../../components/Spinner'
+import { NotifyRowSkeleton } from '../../components/Skeleton'
 import messageIcon from '../../assets/images/message.png'
 import readyIcon from '../../assets/images/ready.png'
 import type { NotificationEntry } from '../../types'
+
+const SKELETON_COUNT = 5
 
 const typeLabel = (type: number) => {
   if (type === 1) return 'Dica do dia'
@@ -96,17 +98,19 @@ export const Notify = () => {
   if (!user) return null
 
   return (
-    <div className="appCenter" style={{ justifyContent: loading ? 'center' : 'flex-start' }}>
-      {loading && <Spinner />}
-      {!loading &&
-        items.map((item) => (
-          <NotificationRow
-            key={item.id}
-            item={item}
-            selected={selectedId === item.id}
-            onSelect={() => handleSelect(item)}
-          />
-        ))}
+    <div className="appCenter">
+      <div className="notifyList">
+        {loading && Array.from({ length: SKELETON_COUNT }).map((_, index) => <NotifyRowSkeleton key={index} />)}
+        {!loading &&
+          items.map((item) => (
+            <NotificationRow
+              key={item.id}
+              item={item}
+              selected={selectedId === item.id}
+              onSelect={() => handleSelect(item)}
+            />
+          ))}
+      </div>
     </div>
   )
 }

@@ -77,6 +77,12 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
+.appTopbarGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .appTopbarRight {
   display: flex;
   align-items: center;
@@ -145,12 +151,152 @@
   background-color: var(--primary-color);
 }
 
+.userMenu {
+  position: relative;
+}
+
+.userMenuTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 0;
+  border: 2px solid transparent;
+  background-color: transparent;
+  transition: border-color var(--transition);
+}
+
+.userMenuTrigger:hover,
+.userMenuTrigger[aria-expanded="true"] {
+  cursor: pointer;
+  border-color: var(--primary-color);
+}
+
+.userMenuAvatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.userMenuAvatarInitials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -.02em;
+}
+
+.userMenuDropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 60;
+  width: 260px;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 8px;
+  animation: iconSelectPop .16s var(--ease);
+}
+
+.userMenuDropdownHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+}
+
+.userMenuDropdownHeader .userMenuAvatarImg,
+.userMenuDropdownHeader .userMenuAvatarInitials {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  font-size: 15px;
+}
+
+.userMenuDropdownIdentity {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.userMenuDropdownName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.userMenuDropdownEmail {
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.userMenuDropdownDivider {
+  height: 1px;
+  background-color: var(--line);
+  margin: 6px 4px;
+}
+
+.userMenuDropdownItem {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: background-color var(--transition-fast);
+}
+
+.userMenuDropdownItem:hover {
+  background-color: var(--bg);
+}
+
+.userMenuDropdownItem svg {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.userMenuDropdownItemDanger {
+  color: #c0392b;
+}
+
+.userMenuDropdownItemDanger svg {
+  color: #c0392b;
+}
+
+.userMenuDropdownItemDanger:hover {
+  background-color: rgba(192, 57, 43, .08);
+}
+
 .appBase {
   position: relative;
   flex: 1;
   min-height: 0;
+  display: flex;
   padding: 24px 28px;
-  overflow-y: auto;
+  overflow: hidden;
   background-color: transparent;
 }
 
@@ -159,10 +305,66 @@
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  min-height: 0;
   width: 100%;
   max-width: 1200px;
   margin-inline: auto;
   background-color: transparent;
+}
+
+/* Pages fill the available height instead of scrolling as a whole; only
+   the variable-length list/grid/form inside each page scrolls internally. */
+.professionalResults,
+.histList,
+.notifyList {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.professionalResults {
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.histList,
+.notifyList {
+  flex-direction: column;
+  width: 100%;
+}
+
+.professionalResults,
+.histList,
+.notifyList,
+.personMain,
+.appBase {
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color .3s;
+}
+
+.professionalResults:hover,
+.histList:hover,
+.notifyList:hover,
+.personMain:hover,
+.appBase:hover {
+  scrollbar-color: var(--scroll-color) transparent;
+}
+
+.professionalResults::-webkit-scrollbar-thumb,
+.histList::-webkit-scrollbar-thumb,
+.notifyList::-webkit-scrollbar-thumb,
+.personMain::-webkit-scrollbar-thumb,
+.appBase::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.professionalResults:hover::-webkit-scrollbar-thumb,
+.histList:hover::-webkit-scrollbar-thumb,
+.notifyList:hover::-webkit-scrollbar-thumb,
+.personMain:hover::-webkit-scrollbar-thumb,
+.appBase:hover::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-color);
 }
 
 @media (max-width: 720px) {
@@ -238,23 +440,6 @@
   font-weight: 800;
   font-size: clamp(20px, 2.4vw, 26px);
   color: var(--ink);
-}
-
-.boardWho {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--muted);
-}
-
-.boardWho .avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background-color: var(--primary-color);
-  flex-shrink: 0;
 }
 
 .bentoGrid {
@@ -358,6 +543,11 @@
 
 .tileHist {
   grid-area: hist;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 320px;
+  align-self: start;
 }
 
 .histHeader {
@@ -366,6 +556,7 @@
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 6px;
+  flex-shrink: 0;
 }
 
 .tileHist .histTitle {
@@ -393,6 +584,7 @@
 
 .histAddForm {
   display: flex;
+  flex-shrink: 0;
   gap: 10px;
   padding-bottom: 14px;
   border-bottom: 1px solid var(--line);
@@ -687,6 +879,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-shrink: 0;
   width: 100%;
   min-height: 110px;
   color: var(--ink);
@@ -706,27 +899,6 @@
   font-size: clamp(20px, 3vw, 28px);
   font-weight: 800;
   letter-spacing: -.01em;
-}
-
-.headerHealth > .headerHealthMain > .userInfo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.headerHealth > .headerHealthMain > .userInfo > h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--muted);
-  margin-left: 10px;
-  margin-right: 20px;
-}
-
-.headerHealth > .headerHealthMain > .userInfo > .imgUser {
-  background-color: var(--primary-color);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
 }
 
 .headerHealth > .filterHealth {
@@ -821,6 +993,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-shrink: 0;
   width: 100%;
   min-height: 110px;
   color: var(--ink);
@@ -840,27 +1013,6 @@
   font-size: clamp(20px, 3vw, 28px);
   font-weight: 800;
   letter-spacing: -.01em;
-}
-
-.headerFitness > .headerFitnessMain > .userInfo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.headerFitness > .headerFitnessMain > .userInfo > h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--muted);
-  margin-left: 10px;
-  margin-right: 20px;
-}
-
-.headerFitness > .headerFitnessMain > .userInfo > .imgUser {
-  background-color: var(--primary-color);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
 }
 
 .headerFitness > .filterFitness {
@@ -935,6 +1087,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-shrink: 0;
   width: 100%;
   height: 50px;
   color: var(--ink);
@@ -954,27 +1107,6 @@
   letter-spacing: -.01em;
 }
 
-.headerPerson > .headerPersonMain > .userInfo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.headerPerson > .headerPersonMain > .userInfo > h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--muted);
-  margin-left: 10px;
-  margin-right: 20px;
-}
-
-.headerPerson > .headerPersonMain > .userInfo > .imgUser {
-  background-color: var(--primary-color);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
 .personMain {
   position: relative;
   background-color: var(--surface);
@@ -990,6 +1122,9 @@
   max-width: 900px;
   gap: 20px 24px;
   box-shadow: var(--shadow-xs);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .personMain > .foto {
@@ -1150,6 +1285,34 @@
     flex: 1 1 100%;
     max-width: 100%;
     margin-inline: 0;
+  }
+}
+
+/* Below this point the page's content no longer fits a single fixed-height
+   screen (short window or narrow/mobile layout with stacked cards), so let
+   the whole page scroll instead of clipping content inside fixed panels. */
+@media (max-height: 700px), (max-width: 960px) {
+  .appBase {
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .appCenter {
+    min-height: auto;
+  }
+
+  .professionalResults,
+  .histList,
+  .notifyList,
+  .personMain {
+    flex: none;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .tileHist {
+    max-height: none;
   }
 }
 

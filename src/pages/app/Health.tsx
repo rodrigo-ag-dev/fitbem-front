@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { useProfessionals, useSelectOptions } from '../../lib/hooks'
 import { ProfessionalCard } from '../../components/ProfessionalCard'
-import { Spinner } from '../../components/Spinner'
+import { ProfessionalCardSkeleton } from '../../components/Skeleton'
 import { Select } from '../../components/Select'
 import type { Option } from '../../types'
+
+const SKELETON_COUNT = 6
 
 const textForValue = (options: Option[], value: string) => {
   const option = options.find((item) => String(item.value) === value)
@@ -47,15 +49,10 @@ export const Health = () => {
   })
 
   return (
-    <div className="appCenter" style={{ justifyContent: 'unset', flex: 0.98, flexDirection: 'row', flexWrap: 'wrap' }}>
+    <div className="appCenter">
       <div className="headerHealth">
         <div className="headerHealthMain">
           <h1>Profissionais da Saúde</h1>
-          <div className="userInfo">
-            <span>&#x25bc;</span>
-            <h2>{user.name}</h2>
-            <img className="imgUser" alt="" />
-          </div>
         </div>
         <div className="filterHealth">
           <div className="filterHealthSearch">
@@ -90,18 +87,21 @@ export const Health = () => {
           />
         </div>
       </div>
-      {loading && <Spinner />}
-      {!loading &&
-        filteredData.map((professional, index) => (
-          <ProfessionalCard
-            key={index}
-            description={professional.description}
-            city={professional.city}
-            whatsapp={professional.whatsapp}
-            specialty={professional.specialty}
-            category={professional.category}
-          />
-        ))}
+      <div className="professionalResults">
+        {loading &&
+          Array.from({ length: SKELETON_COUNT }).map((_, index) => <ProfessionalCardSkeleton key={index} />)}
+        {!loading &&
+          filteredData.map((professional, index) => (
+            <ProfessionalCard
+              key={index}
+              description={professional.description}
+              city={professional.city}
+              whatsapp={professional.whatsapp}
+              specialty={professional.specialty}
+              category={professional.category}
+            />
+          ))}
+      </div>
     </div>
   )
 }

@@ -6,10 +6,12 @@ import { BMICalc, BMIStatus, FormatDate, bmiColor, idealWeight } from '../../lib
 import campaign1 from '../../assets/images/anuncios/image1.jpg'
 import campaign2 from '../../assets/images/anuncios/image2.jpg'
 import campaign3 from '../../assets/images/anuncios/image3.jpg'
+import { HistoryRowSkeleton } from '../../components/Skeleton'
 import type { HistoryEntry } from '../../types'
 
 const campaigns = [campaign1, campaign2, campaign3]
 const CAMPAIGN_INTERVAL = 3500
+const HISTORY_SKELETON_COUNT = 3
 
 const HistoryRow = ({ entry }: { entry: HistoryEntry }) => {
   const bmi = BMICalc(entry.weight, entry.height)
@@ -28,12 +30,14 @@ export const Dashboard = () => {
   const { user } = useAuth()
   const { addWeight, saving } = useAddWeightEntry()
   const [history, setHistory] = useState<HistoryEntry[]>([])
+  const [historyLoading, setHistoryLoading] = useState(true)
   const [campaignIndex, setCampaignIndex] = useState(0)
   const [addingWeight, setAddingWeight] = useState(false)
   const [weightInput, setWeightInput] = useState('')
 
   useEffect(() => {
     if (!user) return
+    setHistoryLoading(true)
     fetch(`${API_BASE}history/${user.userId}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${user.token}` },
@@ -41,6 +45,7 @@ export const Dashboard = () => {
       .then((resp) => resp.json())
       .then((json: HistoryEntry[]) => setHistory(Array.isArray(json) ? json : []))
       .catch(() => {})
+      .finally(() => setHistoryLoading(false))
     // Re-fetch only when the logged-in user changes, not on every vitals update
     // (updateVitals would otherwise clobber the optimistic history update below).
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,10 +80,6 @@ export const Dashboard = () => {
       <div className="board">
         <div className="boardTop">
           <span className="boardEyebrow">Índices</span>
-          <div className="boardWho">
-            <span>{user.name}</span>
-            <div className="avatar" />
-          </div>
         </div>
 
         <div className="bentoGrid">
@@ -153,9 +154,14 @@ export const Dashboard = () => {
               </form>
             )}
 
-            {history.map((entry, index) => (
-              <HistoryRow key={index} entry={entry} />
-            ))}
+            <div className="histList">
+              {historyLoading &&
+                Array.from({ length: HISTORY_SKELETON_COUNT }).map((_, index) => <HistoryRowSkeleton key={index} />)}
+              {!historyLoading &&
+                history.map((entry, index) => (
+                  <HistoryRow key={index} entry={entry} />
+                ))}
+            </div>
           </div>
 
           <div className="tile tileCampaign">

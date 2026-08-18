@@ -83,18 +83,13 @@ export const Person = () => {
   const photoUrl = previewUrl ?? `${API_BASE}user/${user.userId}/photo`
 
   return (
-    <div className="appCenter" style={{ justifyContent: 'unset', flex: 0.98, flexDirection: 'row', flexWrap: 'wrap' }}>
+    <div className="appCenter">
       <div className="headerPerson">
         <div className="headerPersonMain">
           <h1>Meus Dados</h1>
-          <div className="userInfo">
-            <span>&#x25bc;</span>
-            <h2>{user.name}</h2>
-            <img className="imgUser" alt="" />
-          </div>
         </div>
       </div>
-      <div className="personMain" style={{ justifyContent: 'unset', flex: 0.98 }}>
+      <div className="personMain">
         <div className="foto">
           {!photoMissing && (
             <img
